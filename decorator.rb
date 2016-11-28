@@ -1,4 +1,3 @@
-
 module Decorators
   def self.included(klass)
     klass.extend ClassMethods
@@ -11,9 +10,9 @@ module Decorators
     end
     
     def method_added(method)  
-      return unless @first_call
+      return unless @call
       prefix = @prefix
-      @fcall = false
+      @call = false
       alias_method "real_#{method}", method
       define_method method do |*args, &block|
         prefix + send("real_#{method}", *args, &block)
@@ -22,20 +21,3 @@ module Decorators
   end
 
 end
-class C
-  include Decorators
-
-  add_prefix('hello ')
-  def a
-    'from a'
-  end
-  add_prefix('hello ')
-  def b
-    'from b'
-  end
-
-end
-
-
-puts C.new.a
-puts C.new.b

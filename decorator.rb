@@ -1,4 +1,5 @@
 module Decorators
+  
   def self.included(klass)
     klass.extend ClassMethods
   end
